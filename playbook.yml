@@ -1,4 +1,4 @@
-- hosts: web
+- hosts: all 
   vars:
     nginx_port: 8080
     root_dir: /usr/share/nginx/html
@@ -18,7 +18,7 @@
       become: yes
 
     - name: update html
-      ansible.builtin.copy:
+      ansible.builtin.template:
         src: files/index.html
         dest: "{{root_dir}}/index.html" 
       become: yes
@@ -29,35 +29,4 @@
         name: nginx
         state: reloaded
       become: yes
-
-
-- hosts: db 
-  tasks:
-    - name: update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
-      become: yes
-      tags: packages
-
-    - name: install packages
-      ansible.builtin.apt:
-        name: [git, make, nodejs]
-        state: present
-      become: yes
-      tags: packages
-
-    - name: create user arya
-      ansible.builtin.user:
-        name: arya
-      tags: users
-
-    - name: create user sansa
-      ansible.builtin.user:
-        name: sansa
-      tags: users
-
-    - name: create user tirion
-      ansible.builtin.user:
-        name: tirion
-      tags: users
 
