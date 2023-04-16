@@ -1,0 +1,29 @@
+- hosts: db 
+  gather_facts: no
+  vars:
+    users:
+      - jaime
+      - sansa
+      - robert
+  tasks:
+    - name: install git
+      ansible.builtin.apt: name=git state=present
+
+    - name: add users
+      loop: "{{users}}"
+      ansible.builtin.user:
+        name: "{{item}}"
+        state: present
+
+    - name: add git config
+      loop: "{{users}}"
+      ansible.builtin.template:
+        src: files/gitconfig.j2
+        dest: "/home/{{item}}/.gitconfig"
+
+    - name: add ssh key
+      loop: "{{users}}"
+      ansible.builtin.copy:
+        src: files/ssh_key
+        dest: "/home/{{item}}/.ssh/authorized_keys"
+
