@@ -1,6 +1,10 @@
-- hosts: db 
-  gather_facts: no
+- hosts: all
   tasks:
-    - name: install git
+    - name: install git (apt)
       ansible.builtin.apt: name=git state=present update_cache=yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: install git (yum)
+      ansible.builtin.yum: name=git state=present
+      when: ansible_distribution == "CentOS"
 
