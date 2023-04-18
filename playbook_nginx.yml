@@ -3,10 +3,10 @@
     nginx_port: 8080
     root_dir: /usr/share/nginx/html
   tasks:
-    - name: install nginx
+    - name: install packages 
       ansible.builtin.apt:
         update_cache: yes
-        name: nginx
+        name: [nginx, cowsay]
         state: latest
       become: yes
 
@@ -16,6 +16,10 @@
         dest: /etc/nginx/nginx.conf
       notify: restart nginx
       become: yes
+
+    - name: run cowsay
+      ansible.builtin.command: "cowsay 'This server is {{server_name}}'"
+      register: cowsay_result
 
     - name: update html
       ansible.builtin.template:
