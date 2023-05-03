@@ -1,0 +1,10 @@
+- hosts: all
+  vars:
+    users: [petya, vasya]
+  roles:
+    - role: install_packages
+      vars: name=[git, postgres, nodejs]
+
+    - role: setup_user
+      loop: "{{users}}"
+      vars: name="{{item}}" status="present" 

@@ -1,0 +1,8 @@
+- name: install git (apt)
+  ansible.builtin.apt: name={{name}} state=present update_cache=yes
+  when: ansible_distribution == "Ubuntu"
+ 
+- name: install git (yum)
+  ansible.builtin.yum: name={{name}} state=present
+  when: ansible_distribution == "CentOS"
+
