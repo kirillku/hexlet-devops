@@ -1,0 +1,14 @@
+- hosts: all 
+  gather_facts: no
+  vars:
+    user: charlie
+  tasks:
+    - name: add users
+      ansible.builtin.user:
+        name: "{{ user }}"
+        state: present
+    - name: Set authorized key taken from file
+      ansible.posix.authorized_key:
+        user: "{{ user }}"
+        state: present
+        key: "{{ lookup('file', './files/ssh_key') }}"
