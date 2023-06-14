@@ -1,4 +1,4 @@
-![say-hello](https://github.com/kirillku/hexlet-devops/actions/workflows/say-hello.yml/badge.svg)
+![say-hello](https://github.com/kirillku/hexlet-devops/actions/workflows/say-hello.yml/badge.svg?event=push)
 
 # hexlet-devops
 
